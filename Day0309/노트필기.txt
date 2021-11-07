@@ -1,0 +1,214 @@
+SQL> --Á¦¾àÁ¶°Ç »ç¿ë ¸ñÀû
+SQL> --(µ¥ÀÌÅÍ ¹«°á¼º)
+SQL> select table_name from user_tables;
+
+TABLE_NAME                                                                      
+------------------------------------------------------------                    
+MEMBER                                                                          
+DEPT                                                                            
+EMP                                                                             
+MEMBER2                                                                         
+MEMBER3                                                                         
+
+SQL> desc member3;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(20)
+ PHONE                                     NOT NULL VARCHAR2(13)
+ AGE                                                NUMBER
+
+SQL> create table member4(
+  2  name varchar(20)
+  3  , phone varchar13 unique not null
+  4  , age number;
+, age number
+           *
+ERROR at line 4:
+ORA-00907: missing right parenthesis 
+
+
+SQL> create table member4(
+  2  name varchar(20)
+  3  ,phone varchar(13) primary key;
+,phone varchar(13) primary key
+                             *
+ERROR at line 3:
+ORA-00907: missing right parenthesis 
+
+
+SQL> select * from dept;
+
+    DEPTNO DNAME                        LOC                                     
+---------- ---------------------------- --------------------------              
+        10 ACCOUNTING                   NEW YORK                                
+        20 RESEARCH                     DALLAS                                  
+        30 SALES                        CHICAGO                                 
+        40 OPERATIONS                   BOSTON                                  
+
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7369 SMITH                CLERK                    7902 80/12/17          
+       800                    20                                                
+                                                                                
+      7499 ALLEN                SALESMAN                 7698 81/02/20          
+      1600        300         30                                                
+                                                                                
+      7521 WARD                 SALESMAN                 7698 81/02/22          
+      1250        500         30                                                
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7566 JONES                MANAGER                  7839 81/04/02          
+      2975                    20                                                
+                                                                                
+      7654 MARTIN               SALESMAN                 7698 81/09/28          
+      1250       1400         30                                                
+                                                                                
+      7698 BLAKE                MANAGER                  7839 81/05/01          
+      2850                    30                                                
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7782 CLARK                MANAGER                  7839 81/06/09          
+      2450                    10                                                
+                                                                                
+      7788 SCOTT                ANALYST                  7566 87/04/19          
+      3000                    20                                                
+                                                                                
+      7839 KING                 PRESIDENT                     81/11/17          
+      5000                    10                                                
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7844 TURNER               SALESMAN                 7698 81/09/08          
+      1500          0         30                                                
+                                                                                
+      7876 ADAMS                CLERK                    7788 87/05/23          
+      1100                    20                                                
+                                                                                
+      7900 JAMES                CLERK                    7698 81/12/03          
+       950                    30                                                
+                                                                                
+
+     EMPNO ENAME                JOB                       MGR HIREDATE          
+---------- -------------------- ------------------ ---------- --------          
+       SAL       COMM     DEPTNO                                                
+---------- ---------- ----------                                                
+      7902 FORD                 ANALYST                  7566 81/12/03          
+      3000                    20                                                
+                                                                                
+      7934 MILLER               CLERK                    7782 82/01/23          
+      1300                    10                                                
+                                                                                
+
+14 rows selected.
+
+SQL> set line 250
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                   
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                   
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                   
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                   
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                   
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                   
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                   
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                   
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                   
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                   
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                   
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                   
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                   
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                   
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                   
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                   
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                   
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                   
+
+14 rows selected.
+
+SQL> --°á·Ð : ·¹ÄÚµå°¡ ¿©·¯°Ç µé¾î¿Ã¶§ Áßº¹ÀÌ ¹ß»ýÇÒ ¼ö ÀÖÀ¸¹Ç¸£, Áßº¹ºÒÇã¿ë + nullºÒÇã
+SQL> ed
+Wrote file afiedt.buf
+
+  1  -- ë‘ê°œì˜ ì œì•½ì¡°ê±´(unique + not null = primary key)ì„ í•©ì³ë†“ì€ ì£¼í‚¤ ì œì•½ì¡°ê±´ì„ ë§Žì´ ì‚¬ìš©
+  2  create table member4(
+  3  member4_id number primary key
+  4  , name varchar(20)
+  5  ,age number
+  6  , phone varchar(13)
+  7* )
+SQL> 
+SQL> /
+
+Table created.
+
+SQL> -- ÁÖÅ° Á¦¾àÁ¶°ÇÀÌ ¼³Á¤µÈ ÄÃ·³¿¡ °ªÀ¸ ³Ö´Â ½Ç½À
+SQL> insert into member4(member4_id, name, age, phone)
+  2  values();
+values()
+       *
+ERROR at line 2:
+ORA-00936: missing expression 
+
+
+SQL> --ÁÖÅ°¿¡ µé¾î°¥ ¼ýÀÚ°ª µ¥ÀÌÅÍ´Â °³¹ßÀÚ°¡ Á¤ÇÏ´Â°Ô ¾Æ´Ï¶ó, ½Ã½ºÅÛ¿¡ ÀÇÇØ °áÁ¤µÇ¾î¾ß ÇÑ´Ù
+SQL> --¿À¶óÅ¬¿¡´Â Å×ÀÌºí¿¡ ¼ýÀÚ°ªÀ» °ü¸®ÇØÁÖ´Â Àü´ã Å×ÀÌºíÀ» Áö¿øÇÏ´Âµ¥ ÀÌ°´Ã¼¸¦ °¡¸®ÄÑ
+SQL> --½ÃÄö½º¶ó°í ÇÑ´Ù (sequence)
+SQL> create sequence seq_member4
+  2  increment by 1
+  3  start with 1;
+create sequence seq_member4
+*
+ERROR at line 1:
+ORA-01031: insufficient privileges 
+
+
+SQL> --½ÃÄö½º »ý¼º¿¡ ´ëÇÑ ±ÇÇÑÀÌ ¾ø´Ù
+SQL> --½Ã½ºÅÛÀ¸·Î Á¢¼Ó
+SQL> conn system/1234
+Connected.
+SQL> show user
+USER is "SYSTEM"
+SQL> grant create sequence to adam;
+
+Grant succeeded.
+
+SQL> --´Ù½Ã ¾Æ´ãÀ¸·Î Á¢¼Ó
+SQL> conn adam/1234
+Connected.
+SQL> show user;
+USER is "ADAM"
+SQL> create sequence seq_member4
+  2  increment by 1
+  3  start with 1;
+
+Sequence created.
+
+SQL> insert into member4(member4_id, name, age, phone)
+  2  values(seq_member4.nextval, 'batman', 38, '010');
+
+1 row created.
+
+SQL> select * from member4;
+
+MEMBER4_ID NAME                                            AGE PHONE                                                                                                                                                                                      
+---------- ---------------------------------------- ---------- --------------------------                                                                                                                                                                 
+         1 batman                                           38 010                                                                                                                                                                                        
+
+SQL> -- DDL¸í·É¿¡´Â ÀÌÁ¦±îÁöÀÇ Æ®·£Àè¼ÇÀ» È£°¡Á¤Áö¾î ¹ö¸°´Ù
+SQL> spool off

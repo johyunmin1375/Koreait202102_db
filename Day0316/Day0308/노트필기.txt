@@ -1,0 +1,149 @@
+SQL> -- query 안에 query문 (sub query)
+SQL> -- avg, sum, min, max, count
+SQL> -- 테이블 잘 만들어 보기( 결점이 없는 데이터만 받아들이기)
+SQL> -- 테이블 정의시, 올바른 데이터 즉 무결성(결함이없는)의 테이터만을
+SQL> -- 받기 위한 조건을 함께 지정할 수 있다.. 이러한 조건들을 가리켜ㅑ
+SQL> -- 제약조거 (Constraint 조건)이라 하며 다음과 같은 유형의 제약조건을 알아두자
+SQL> -- Not null, Unique, primary key, foreign key, check, default, index
+SQL> select table_name from user_tables;
+
+TABLE_NAME                                                                      
+------------------------------------------------------------                    
+MEMBER                                                                          
+DEPT                                                                            
+EMP                                                                             
+
+SQL> -- 기존에 제약조건을 사용하지 않은 테이블들에 어떠한 문제가 발생하는지 알아보자
+SQL> select * from member;
+
+NAME                                            AGE PHONE                       
+---------------------------------------- ---------- --------------------------  
+홍길동                                           23 010                         
+
+SQL> -- 레코드 지우기
+SQL> delet from member;
+SP2-0734: unknown command beginning "delet from..." - rest of line ignored.
+SQL> delete from member;
+
+1 row deleted.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> -- 커밋을 했으므로, 복구할 수 없는 트랜잭션의 확정이 이루어짐
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from member;
+
+no rows selected
+
+SQL> insert into member(name,phone,age)
+  2  values('배트맨','010',35);
+
+1 row created.
+
+SQL> select * from member;
+
+NAME                                            AGE PHONE                       
+---------------------------------------- ---------- --------------------------  
+배트맨                                           35 010                         
+
+SQL> insert into member(name,phone,age) values('배트맨','010',age);
+insert into member(name,phone,age) values('배트맨','010',age)
+                                                            *
+ERROR at line 1:
+ORA-00984: column not allowed here 
+
+
+SQL> insert into member(name,phone,age) values('배트맨','010',35);
+
+1 row created.
+
+SQL> select * from member;
+
+NAME                                            AGE PHONE                       
+---------------------------------------- ---------- --------------------------  
+배트맨                                           35 010                         
+배트맨                                           35 010                         
+
+SQL> -- 결론 : 테이블 정의시 중복되지 않는 데이터만 받아들일 수 있는 제한사항을 두자
+SQL> create table member2(name verchar(20),phone varchar(13) unique,age number);
+create table member2(name verchar(20),phone varchar(13) unique,age number)
+                                 *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> create table member2(name varchar(20),phone varchar(13) unique,age number);
+
+Table created.
+
+SQL> insert into member2(name, phone, age) values('batman','010',38);
+
+1 row created.
+
+SQL> insert into member2(name, phone, age) values('batman','010',38);
+insert into member2(name, phone, age) values('batman','010',38)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (ADAM.SYS_C007001) violated 
+
+
+SQL> select * from member2;
+
+NAME                                     PHONE                             AGE  
+---------------------------------------- -------------------------- ----------  
+batman                                   010                                38  
+
+SQL> insert into member2(name, age) values('batman',38);
+
+1 row created.
+
+SQL> insert into member2(name, age) values('batman',38);
+
+1 row created.
+
+SQL> select * from member2;
+
+NAME                                     PHONE                             AGE  
+---------------------------------------- -------------------------- ----------  
+batman                                   010                                38  
+batman                                                                      38  
+batman                                                                      38  
+
+SQL> -- uniqeu 제약조건은 null을 허용해버린다
+SQL> -- 따라서 memeber3를 생성하면서 unique 하면서 널을 허용하지 않는 제약 조건을 걸자
+SQL> ed
+Wrote file afiedt.buf
+
+  1  create table member3(
+  2  name varchar(20)
+  3  , phone varchar(13) unique not null
+  4  , age number
+  5* )
+SQL> /
+
+Table created.
+
+SQL> insert into member3(name, phone, age) values('superman',37);
+insert into member3(name, phone, age) values('superman',37)
+                                      *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> insert into member3(name, phone, age) values('superman', '010',37);
+
+1 row created.
+
+SQL> insert into member3(name, phone, age) values('superman', '010',37);
+insert into member3(name, phone, age) values('superman', '010',37)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (ADAM.SYS_C007003) violated 
+
+
+SQL> spool off

@@ -1,0 +1,288 @@
+SQL> --제약조건 (..... foreign key )
+SQL> --정규화에 의해 물리적으로 분리된 테이블을 합쳐서 보여주기
+SQL> --조인(join)
+SQL> --지금까지 사용해왔던 조인은 inner join 이다
+SQL> --이너조인은 조인 대상 테이블간 공통레코드만을 가져온다
+SQL> select * from dept;
+
+    DEPTNO DNAME                        LOC                                                                                                                                                             
+---------- ---------------------------- --------------------------                                                                                                                                      
+        10 ACCOUNTING                   NEW YORK                                                                                                                                                        
+        20 RESEARCH                     DALLAS                                                                                                                                                          
+        30 SALES                        CHICAGO                                                                                                                                                         
+        40 OPERATIONS                   BOSTON                                                                                                                                                          
+
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                 
+
+14 rows selected.
+
+SQL> /
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                 
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                 
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                 
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                 
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                 
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                 
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                 
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                 
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                 
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                 
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                 
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                 
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                 
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                 
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                 
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                 
+
+14 rows selected.
+
+SQL> set line 300
+SQL> /
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                                                                     
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                                                                     
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                                                                     
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                                                                     
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                                                                     
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                                                                     
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                                                                     
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                                                                     
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                                                                     
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                                                                     
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                                                                     
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                                                                     
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                                                                     
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                                                                     
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                                                                     
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                                                                     
+
+14 rows selected.
+
+SQL> /
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                                                                     
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                                                                     
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                                                                     
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                                                                     
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                                                                     
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                                                                     
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                                                                     
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                                                                     
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                                                                     
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                                                                     
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                                                                     
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                                                                     
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                                                                     
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                                                                     
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                                                                     
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                                                                     
+
+14 rows selected.
+
+SQL> /
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                                                                     
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                                                                     
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                                                                     
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                                                                     
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                                                                     
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                                                                     
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                                                                     
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                                                                     
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                                                                     
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                                                                     
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                                                                     
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                                                                     
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                                                                     
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                                                                     
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                                                                     
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                                                                     
+
+14 rows selected.
+
+SQL> --40번 부서에 근무하는 사원이 없기 때문에 필요가 없었다...
+SQL> --하지만 통계 작업시 40번부서가 누락되면 안되는 상태
+SQL> --부서명과 소속사원수를 출력하시오
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select dname, count(ename)
+  2  from emp e, dept d
+  3* where e.deptno=d.deptno
+SQL> /
+select dname, count(ename)
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select dname, count(ename)
+  2  from emp e, dept d
+  3  where e.deptno=d.deptno
+  4* group by dname
+SQL> /
+
+DNAME                        COUNT(ENAME)                                                                                                                                                                                                                                                                   
+---------------------------- ------------                                                                                                                                                                                                                                                                   
+ACCOUNTING                              3                                                                                                                                                                                                                                                                   
+RESEARCH                                5                                                                                                                                                                                                                                                                   
+SALES                                   6                                                                                                                                                                                                                                                                   
+
+SQL> select * from dept;
+
+    DEPTNO DNAME                        LOC                                                                                                                                                                                                                                                                 
+---------- ---------------------------- --------------------------                                                                                                                                                                                                                                          
+        10 ACCOUNTING                   NEW YORK                                                                                                                                                                                                                                                            
+        20 RESEARCH                     DALLAS                                                                                                                                                                                                                                                              
+        30 SALES                        CHICAGO                                                                                                                                                                                                                                                             
+        40 OPERATIONS                   BOSTON                                                                                                                                                                                                                                                              
+
+SQL> --누락된 이유 ?? 현재 사용중인 join문은 inner join.이고 조인 대상 테이블간 공통된
+SQL> --데이터만 가져온다..
+SQL> --결론 : 공통되지 않은 데이터도 무조건 가져오는 조인
+SQL> --outer join을 사용하자
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select ename, d.deptno, dname
+  2  from dept d  left outer  join emp e
+  3* on d.deptno=e.deptno
+SQL> /
+
+ENAME                    DEPTNO DNAME                                                                                                                                                                                                                                                                       
+-------------------- ---------- ----------------------------                                                                                                                                                                                                                                                
+CLARK                        10 ACCOUNTING                                                                                                                                                                                                                                                                  
+KING                         10 ACCOUNTING                                                                                                                                                                                                                                                                  
+MILLER                       10 ACCOUNTING                                                                                                                                                                                                                                                                  
+JONES                        20 RESEARCH                                                                                                                                                                                                                                                                    
+FORD                         20 RESEARCH                                                                                                                                                                                                                                                                    
+ADAMS                        20 RESEARCH                                                                                                                                                                                                                                                                    
+SMITH                        20 RESEARCH                                                                                                                                                                                                                                                                    
+SCOTT                        20 RESEARCH                                                                                                                                                                                                                                                                    
+WARD                         30 SALES                                                                                                                                                                                                                                                                       
+TURNER                       30 SALES                                                                                                                                                                                                                                                                       
+ALLEN                        30 SALES                                                                                                                                                                                                                                                                       
+JAMES                        30 SALES                                                                                                                                                                                                                                                                       
+BLAKE                        30 SALES                                                                                                                                                                                                                                                                       
+MARTIN                       30 SALES                                                                                                                                                                                                                                                                       
+                             40 OPERATIONS                                                                                                                                                                                                                                                                  
+
+15 rows selected.
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select dname, count(ename)
+  2  from dept d  left outer  join emp e
+  3  on d.deptno=e.deptno
+  4* group by dname
+SQL> /
+
+DNAME                        COUNT(ENAME)                                                                                                                                                                                                                                                                   
+---------------------------- ------------                                                                                                                                                                                                                                                                   
+ACCOUNTING                              3                                                                                                                                                                                                                                                                   
+OPERATIONS                              0                                                                                                                                                                                                                                                                   
+RESEARCH                                5                                                                                                                                                                                                                                                                   
+SALES                                   6                                                                                                                                                                                                                                                                   
+
+SQL> --group by (데이터를 그룹화 시켜 보여줌, 집계함수와 친함, )
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                                                                     
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                                                                     
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                                                                     
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                                                                     
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                                                                     
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                                                                     
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                                                                     
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                                                                     
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                                                                     
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                                                                     
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                                                                     
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                                                                     
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                                                                     
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                                                                     
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                                                                     
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                                                                     
+
+14 rows selected.
+
+SQL> select deptno from emp;
+
+    DEPTNO                                                                                                                                                                                                                                                                                                  
+----------                                                                                                                                                                                                                                                                                                  
+        20                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        20                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        10                                                                                                                                                                                                                                                                                                  
+        20                                                                                                                                                                                                                                                                                                  
+        10                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        20                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        20                                                                                                                                                                                                                                                                                                  
+        10                                                                                                                                                                                                                                                                                                  
+
+14 rows selected.
+
+SQL> select distinct deptno from emp;
+
+    DEPTNO                                                                                                                                                                                                                                                                                                  
+----------                                                                                                                                                                                                                                                                                                  
+        30                                                                                                                                                                                                                                                                                                  
+        20                                                                                                                                                                                                                                                                                                  
+        10                                                                                                                                                                                                                                                                                                  
+
+SQL> select distinct, count(*) deptno from emp;
+select distinct, count(*) deptno from emp
+               *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> --결론 : distinct 그룹화가 아닌, 중복만 제거한 것임
+SQL> select distinct, count(*) from emp;
+select distinct, count(*) from emp
+               *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> select distinct deptno, count(*) from emp;
+select distinct deptno, count(*) from emp
+                *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> --제약조건
+SQL> --foreign key, check, default, not null, unique, primary key, index
+SQL> --오프라인 상의 색인을 DBMS에서도 도입함
+SQL> --색인 즉 index를 이용하면 검색이 빠르다
+SQL> -- 즉 성능을 높이기 위한 방법이다
+SQL> --실습을 위해 대량의 데이터가 필요...
+SQL> spool off

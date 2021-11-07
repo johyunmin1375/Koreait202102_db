@@ -1,0 +1,324 @@
+SQL> --ALLENÀÇ ºÎ¼­¸í,±Þ¿©¸¦ Ãâ·ÂÇÏ¼¼¿ä
+SQL> select dname, sal
+  2  from emp e, dept e
+  3  where e.deptno=;
+where e.deptno=
+              *
+ERROR at line 3:
+ORA-00936: missing expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select dname, sal
+  2  from emp e, dept d
+  3  where e.deptno=d.deptno
+  4* and ename='ALLEN'
+SQL> /
+
+DNAME                               SAL                                                                                                                                                                                                                   
+---------------------------- ----------                                                                                                                                                                                                                   
+SALES                              1600                                                                                                                                                                                                                   
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select dname, sal , deptno
+  2  from emp e, dept d
+  3  where e.deptno=d.deptno
+  4* and ename='ALLEN'
+SQL> /
+select dname, sal , deptno
+                    *
+ERROR at line 1:
+ORA-00918: column ambiguously defined 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select dname, sal , e.deptno
+  2  from emp e, dept d
+  3  where e.deptno=d.deptno
+  4* and ename='ALLEN'
+SQL> /
+
+DNAME                               SAL     DEPTNO                                                                                                                                                                                                        
+---------------------------- ---------- ----------                                                                                                                                                                                                        
+SALES                              1600         30                                                                                                                                                                                                        
+
+SQL> --±×·ìÈ­ ´ëÇØ ÇÐ½À
+SQL> select * from emp;
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                   
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                   
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                   
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                   
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                   
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                   
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                   
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                   
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                   
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                   
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                   
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                   
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                   
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                   
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                   
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                   
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                   
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                   
+
+14 rows selected.
+
+SQL> --ÇÑÆäÀÌÁö´ç º¸¿©Áú ·¹ÄÚµåÀÇ ¼ö¸¦ ´Ã¸®ÀÚ (Äõ¸®¹®ÀÌ ¾Æ´Ñ SQLPlus ÇÁ·Î±×·¥¸í·É¾î)
+SQL> set pagesize 20
+SQL> /
+
+     EMPNO ENAME                JOB                       MGR HIREDATE        SAL       COMM     DEPTNO                                                                                                                                                   
+---------- -------------------- ------------------ ---------- -------- ---------- ---------- ----------                                                                                                                                                   
+      7369 SMITH                CLERK                    7902 80/12/17        800                    20                                                                                                                                                   
+      7499 ALLEN                SALESMAN                 7698 81/02/20       1600        300         30                                                                                                                                                   
+      7521 WARD                 SALESMAN                 7698 81/02/22       1250        500         30                                                                                                                                                   
+      7566 JONES                MANAGER                  7839 81/04/02       2975                    20                                                                                                                                                   
+      7654 MARTIN               SALESMAN                 7698 81/09/28       1250       1400         30                                                                                                                                                   
+      7698 BLAKE                MANAGER                  7839 81/05/01       2850                    30                                                                                                                                                   
+      7782 CLARK                MANAGER                  7839 81/06/09       2450                    10                                                                                                                                                   
+      7788 SCOTT                ANALYST                  7566 87/04/19       3000                    20                                                                                                                                                   
+      7839 KING                 PRESIDENT                     81/11/17       5000                    10                                                                                                                                                   
+      7844 TURNER               SALESMAN                 7698 81/09/08       1500          0         30                                                                                                                                                   
+      7876 ADAMS                CLERK                    7788 87/05/23       1100                    20                                                                                                                                                   
+      7900 JAMES                CLERK                    7698 81/12/03        950                    30                                                                                                                                                   
+      7902 FORD                 ANALYST                  7566 81/12/03       3000                    20                                                                                                                                                   
+      7934 MILLER               CLERK                    7782 82/01/23       1300                    10                                                                                                                                                   
+
+14 rows selected.
+
+SQL> --ºÎ¼­ÀÇ Á¾·ù¸¦ Ãâ·ÂÇÏ½Ã¿À
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select deptno from emp
+  2* group by deptno
+SQL> /
+
+    DEPTNO                                                                                                                                                                                                                                                
+----------                                                                                                                                                                                                                                                
+        30                                                                                                                                                                                                                                                
+        20                                                                                                                                                                                                                                                
+        10                                                                                                                                                                                                                                                
+
+SQL> --¾÷¹«À¯ÇüÀ» Ãâ·ÂÇÏ¼¼¿ä
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select job from emp
+  2* group by job
+SQL> /
+
+JOB                                                                                                                                                                                                                                                       
+------------------                                                                                                                                                                                                                                        
+CLERK                                                                                                                                                                                                                                                     
+SALESMAN                                                                                                                                                                                                                                                  
+PRESIDENT                                                                                                                                                                                                                                                 
+MANAGER                                                                                                                                                                                                                                                   
+ANALYST                                                                                                                                                                                                                                                   
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select ename, job from emp
+  2* group by job
+SQL> /
+select ename, job from emp
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select ename, job from emp
+  2* group by ename, job
+SQL> /
+
+ENAME                JOB                                                                                                                                                                                                                                  
+-------------------- ------------------                                                                                                                                                                                                                   
+WARD                 SALESMAN                                                                                                                                                                                                                             
+SMITH                CLERK                                                                                                                                                                                                                                
+CLARK                MANAGER                                                                                                                                                                                                                              
+TURNER               SALESMAN                                                                                                                                                                                                                             
+JAMES                CLERK                                                                                                                                                                                                                                
+JONES                MANAGER                                                                                                                                                                                                                              
+MARTIN               SALESMAN                                                                                                                                                                                                                             
+ADAMS                CLERK                                                                                                                                                                                                                                
+SCOTT                ANALYST                                                                                                                                                                                                                              
+KING                 PRESIDENT                                                                                                                                                                                                                            
+FORD                 ANALYST                                                                                                                                                                                                                              
+ALLEN                SALESMAN                                                                                                                                                                                                                             
+BLAKE                MANAGER                                                                                                                                                                                                                              
+MILLER               CLERK                                                                                                                                                                                                                                
+
+14 rows selected.
+
+SQL> --group¿¡ ¸í½ÃÇÑ ÄÃ·³¸¸ÀÌ selectÀý¿¡ ¿Ã¼ö ÀÖ´Ù , Áï  select ¹®ÀÇ ´ë»óÀÌ µÉ¼ö ÀÖ´Ù.
+SQL> --»ç½Ç  group by  ´Â Áý°èÇÔ¼ö¶û ¿¬°ü¼ºÀÌ ³ô´Ù
+SQL> --ºÎ¼­º° ¼Ò¼ÓµÈ »ç¿ø¼ö¸¦ Ãâ·ÂÇÏ½Ã¿À
+SQL> ed
+Wrote file afiedt.buf
+
+  1  --ì›ì¹™ : group byì—ëª…ì‹œí•œ ì»¬ëŸ¼ë§Œì´  selectëŒ€ìƒ
+
+  2  --ì˜ˆì™¸ : ë‹¨ ì§‘ê³„í•¨ìˆ˜ëŠ” ì´ë¯¸ ê·¸ë£¹í™”ë˜ì—ˆìœ¼ë¯€ë¡œ ì˜ˆì™¸
+  3  select deptno, count(*) 
+  4  from emp 
+  5* group by deptno
+SQL> /
+--ì›ì¹™ : group byì—ëª…ì‹œí•œ ì»¬ëŸ¼ë§Œì´  selectëŒ€ìƒ
+
+*
+ERROR at line 1:
+ORA-24374: define not done before fetch or execute and fetch 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select deptno, count(*) 
+  2  from emp 
+  3* group by deptno
+SQL> /
+
+    DEPTNO   COUNT(*)                                                                                                                                                                                                                                     
+---------- ----------                                                                                                                                                                                                                                     
+        30          6                                                                                                                                                                                                                                     
+        20          5                                                                                                                                                                                                                                     
+        10          3                                                                                                                                                                                                                                     
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select deptno, count(*) as ì†Œì†ì‚¬ì›ìˆ˜
+
+  2  from emp 
+  3* group by deptno
+SQL> /
+
+    DEPTNO £¿Œì†£¿¬¼›£¿£¿                                                                                                                                                                                                                               
+---------- ----------------                                                                                                                                                                                                                               
+        30                6                                                                                                                                                                                                                               
+        20                5                                                                                                                                                                                                                               
+        10                3                                                                                                                                                                                                                               
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select deptno, count(*) as empcount
+  2  from emp 
+  3* group by deptno
+  4  \/
+  5  ed
+  6  ;
+\/
+*
+ERROR at line 4:
+ORA-00911: invalid character 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select deptno, count(*) as empcount
+  2  from emp 
+  3  group by deptno
+  4* /
+SQL> /
+/
+*
+ERROR at line 4:
+ORA-00936: missing expression 
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select deptno, count(*) as empcount
+  2  from emp 
+  3* group by deptno
+  4  /
+
+    DEPTNO   EMPCOUNT                                                                                                                                                                                                                                     
+---------- ----------                                                                                                                                                                                                                                     
+        30          6                                                                                                                                                                                                                                     
+        20          5                                                                                                                                                                                                                                     
+        10          3                                                                                                                                                                                                                                     
+
+SQL> --ºÎ¼­º° Æò±Õ±Þ¿©
+SQL> --group by  »ç¿ë½Ã ÁÖÀÇÇÒÁ¡
+SQL> --¿øÄ¢) group by ¿¡ ¸í½ÃÇÑ ÄÃ·³¸¸ÀÌ selectÀÇ ´ë»óÀÌ µÉ ¼ö ÀÖ´Ù
+SQL> --¿¹¿Ü) ´Ü Áý°èÇÔ¼ö´Â ±×·¯ÇÏÁö ¾Æ´ÏÇÏ´Ù (why? ÀÌ¹Ì ±×·ìÈ£¤Ã¤¿)
+SQL> -- avg ¹èŸmÁÕ ~~
+SQL> --Áý°èÇÔ¼öÀÇ Á¾·ù (ÇÕ, ÃÑ¼ö, ÃÖ´ë°ª, ÃÖ¼Ò°ª, Æò±Õ)
+SQL> select deptno , avg(sal) from emp
+  2  group by deptno;
+
+    DEPTNO   AVG(SAL)                                                                                                                                                                                                                                     
+---------- ----------                                                                                                                                                                                                                                     
+        30 1566.66667                                                                                                                                                                                                                                     
+        20       2175                                                                                                                                                                                                                                     
+        10 2916.66667                                                                                                                                                                                                                                     
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select deptno , avg(sal) from emp
+  2  group by deptno
+  3* order by deptno asc
+SQL> /
+
+    DEPTNO   AVG(SAL)                                                                                                                                                                                                                                     
+---------- ----------                                                                                                                                                                                                                                     
+        10 2916.66667                                                                                                                                                                                                                                     
+        20       2175                                                                                                                                                                                                                                     
+        30 1566.66667                                                                                                                                                                                                                                     
+
+SQL> --ºÎ¼­º° ÇÕ, ÃÑ¼ö, ÃÖ´ë°ª, ÃÖ¼Ò°ª, Æò±ÕÀ» Ãâ·ÂÇÏ½Ã¿À
+SQL> select deptno, sum(sal), count(*), max(sal), min(sal), avg(sal)
+  2  from emp
+  3  group by deptno;
+
+    DEPTNO   SUM(SAL)   COUNT(*)   MAX(SAL)   MIN(SAL)   AVG(SAL)                                                                                                                                                                                         
+---------- ---------- ---------- ---------- ---------- ----------                                                                                                                                                                                         
+        30       9400          6       2850        950 1566.66667                                                                                                                                                                                         
+        20      10875          5       3000        800       2175                                                                                                                                                                                         
+        10       8750          3       5000       1300 2916.66667                                                                                                                                                                                         
+
+SQL> --ºÎ¼­¸í , ¼Ò¼Ó»ç¿ø¼ö¸¦ Ãâ·Â
+SQL> ed
+Wrote file afiedt.buf
+
+  1  select dname, count(ename)
+  2  from emp e, dept d
+  3  where e.deptno=d.deptno
+  4* group by dname
+SQL> /
+
+DNAME                        COUNT(ENAME)                                                                                                                                                                                                                 
+---------------------------- ------------                                                                                                                                                                                                                 
+ACCOUNTING                              3                                                                                                                                                                                                                 
+RESEARCH                                5                                                                                                                                                                                                                 
+SALES                                   6                                                                                                                                                                                                                 
+
+SQL> select * from dept;
+
+    DEPTNO DNAME                        LOC                                                                                                                                                                                                               
+---------- ---------------------------- --------------------------                                                                                                                                                                                        
+        10 ACCOUNTING                   NEW YORK                                                                                                                                                                                                          
+        20 RESEARCH                     DALLAS                                                                                                                                                                                                            
+        30 SALES                        CHICAGO                                                                                                                                                                                                           
+        40 OPERATIONS                   BOSTON                                                                                                                                                                                                            
+
+SQL> spool off
